@@ -56,4 +56,12 @@ class And : public Connector
 		bool check();
 };
 
+class Pipe : public Connector
+{
+	public:
+	Pipe();
+	bool execute();
+	bool check();
+};
+
 #endif
