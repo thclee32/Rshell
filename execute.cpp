@@ -32,6 +32,56 @@ Execute::Execute(string someString) {
 
 bool Execute::execute()
 {	
+	// for(unsigned i = 0; i < exeString.size(); ++i)
+	// {
+	// 	cout << exeString.at(i) << endl;
+	// }
+	bool foundRedirect = false; //initialize flag to false
+	string redirect;			//will hold the redirect symbol
+	
+	string temp1;
+	string temp2;
+	//for loop looking for redirect command
+	for(unsigned i = 0; i < exeString.size(); ++i)
+	{
+		
+		if(foundRedirect == false && (exeString.at(i) == "<" || exeString.at(i) == ">" || exeString.at(i) == ">>"))
+		{
+			foundRedirect = true;
+			if(exeString.at(i) == "<")
+			{
+				redirect = "<";
+			}
+			if(exeString.at(i) == ">")
+			{
+				redirect = ">";
+			}
+			if(exeString.at(i) == ">>")
+			{
+				redirect = ">>";
+			}
+			i++;
+		}
+		if(foundRedirect == false)
+		{
+			temp1 = temp1 + " " + exeString.at(i);
+		}
+		else
+		{
+			temp2 = temp2 + exeString.at(i);
+		}
+	}
+	
+	if(foundRedirect == true)
+	{
+		exeString.clear();
+		exeString.push_back(temp1);
+		exeString.push_back(temp2);
+	}
+	
+
+	
+	
 	
 	//add stuff here
 	if (exeString.size() == 0) {
@@ -116,15 +166,21 @@ bool Execute::execute()
 	
 	
 	//-----------------START REDIRECTION/PIPE COMMANDS-------------
-	else if(exeString.at(0) == "<" || exeString.at(0) == ">" || exeString.at(0) == ">>" || exeString.at(0) == "|" ) {
+	else if(foundRedirect) {
 		//change/insert stuff here depending on how we decide to parse
 		
+		// cout << "here" << endl;
+		// for(unsigned i = 0; i < exeString.size(); ++i)
+		// {
+		// 	cout << exeString.at(i) << endl;
+		// }
 		
-		if(exeString.at(0) == "<")
+	
+		if(redirect == "<")
 		{
 			int buffer = dup(0);
 			
-			int outputfile = open(exeString.at(0).c_str(), O_RDWR);
+			int outputfile = open(exeString.at(1).c_str(), O_RDWR);
 			
 			if(outputfile == -1)
 			{
@@ -135,18 +191,97 @@ bool Execute::execute()
 			close(0);
 			dup2(outputfile, 0);
 		
+			//IM DYING
+			//STOP DYING
+			
+			Execute* test = new Execute(exeString.at(0));
+			bool firstcommand = test->execute();
+			
+			close(0);
+			dup2(buffer, 0);
+			
+			return firstcommand;
+		}
+		
+		else if(redirect == ">")
+		{
+			
+			int buffer = dup(1);
+			int fd;		//file descriptor
+			int ret;	//return of dup2 call
+			
+			fd = open(exeString.at(1).c_str(), O_CREAT | O_WRONLY);
+			
+			//if fd returns -1, it failed
+			if(fd < 0)
+			{
+				perror("Error: open failed.");
+				return false;
+			}
+			
+			close(1);
+			ret = dup2(fd, 1);
+			
+			//similar to above: if ret returns -1, it failed
+			if(ret < 0)
+			{
+				perror("Error: dup failed.");
+				return false;
+			}
+			
+			Execute* test = new Execute(exeString.at(0));
+			bool firstcommand = test->execute();
+			
+			close(1);
+			dup2(buffer, 1);
+			
+			return firstcommand;
+			
 			
 		}
 		
-		else if(exeString.at(0) == "|")
+		else if(redirect == ">>")
 		{
-			int mypipe[2];
-			int pipereturn;
+			int buffer = dup(1);
+			int fd; 		//file descriptor
+			int ret;		//return value of dup2 call
 			
-			pipereturn = pipe(mypipe);
+			fd = open(exeString.at(1).c_str(), O_CREAT | O_APPEND | O_WRONLY);
+			//if fd returns -1, it failed
+			if(fd < 0)
+			{
+				perror("Error: open failed.");
+				return false;
+			}
 			
+			close(1);
+			ret = dup2(fd, 1);
+			
+			//similar to above: if ret returns -1, it failed
+			if(ret < 0)
+			{
+				perror("Error: dup failed.");
+				return false;
+			}
+			
+			Execute* test = new Execute(exeString.at(0));
+			bool firstcommand = test->execute();
+			
+			close(1);
+			dup2(buffer, 1);
+			
+			return firstcommand;
 			
 		}
+		// else if(redirect == "|")
+		// {
+		// 	int mypipe[2];
+		// 	int pipereturn;
+			
+		// 	pipereturn = pipe(mypipe);
+			
+			
+		// }
 		
 	}
 	//---------------END REDIRECTION/PIPE COMMANDS------------------

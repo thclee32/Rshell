@@ -85,6 +85,17 @@ bool And::check() {
 	return false;
 }
 
+Pipe::Pipe() : Connector() {}
+
+bool Pipe::execute() {
+	return true;
+}
+
+bool Pipe::check()
+{
+	return true;
+}
+
 // void And::print() {
 // 	cout << "&&" << endl;
 // }

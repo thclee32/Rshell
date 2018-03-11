@@ -12,6 +12,7 @@
 #include "execute.h"
 #include <stack>
 #include <queue>
+#include <vector>
 #include <stdio.h>
 #include <stddef.h>
 #include <sys/wait.h>

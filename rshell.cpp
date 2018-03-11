@@ -10,11 +10,12 @@ Base* shunting_yard(vector<string> &cmdVector) {
 	stack<string>cmdStack; //stack that stores the operands
 	queue<string> cmdQueue; //queue that stores the commands
 	for (unsigned int i = 0; i < cmdVector.size(); i++) {
-			if (cmdVector.at(i) != ";" && cmdVector.at(i) != "|" && cmdVector.at(i) != "&" && cmdVector.at(i) != "(" && cmdVector.at(i) != ")") {
+		//cout << cmdVector.at(i) << endl;
+			if (cmdVector.at(i) != ";" && cmdVector.at(i) != "|" && cmdVector.at(i) != "&" && cmdVector.at(i) != "(" && cmdVector.at(i) != ")" && cmdVector.at(i) != "%") {
 				//cout << "its a command" << endl;
 				cmdQueue.push(cmdVector.at(i));
 			}
-			else if (cmdVector.at(i) == ";" || cmdVector.at(i) == "|" || cmdVector.at(i) == "&") 
+			else if (cmdVector.at(i) == ";" || cmdVector.at(i) == "|" || cmdVector.at(i) == "&" || cmdVector.at(i) == "%") 
 			{ 
 				if (cmdStack.empty()) {
 					//cout << "because stack is empty" << endl;
@@ -62,6 +63,7 @@ Base* shunting_yard(vector<string> &cmdVector) {
 	Base* B;
 	
 	while (!cmdQueue.empty()) {
+		// cout << cmdQueue.front() << endl;
 		if (cmdQueue.front() == "&") { 
 			B = new And(); 
 		}
@@ -72,6 +74,10 @@ Base* shunting_yard(vector<string> &cmdVector) {
 		
 		else if (cmdQueue.front() == ";") { 
 			B = new Semi();
+		}
+		
+		else if (cmdQueue.front() == "%") {
+			B = new Pipe();
 		}
 		
 		else { 
@@ -133,7 +139,7 @@ void parse(string userCmd, vector<string> &combined) { //parses input and puts i
 	}
 	
 	for (unsigned i = 0; i < userCmd.size(); i++) { //traversing to check for a connector
-		if (userCmd.at(i) == ';' || userCmd.at(i) == '&' || userCmd.at(i) == '|' || userCmd.at(i) == '(' || userCmd.at(i) == ')') {
+		if (userCmd.at(i) == ';' || userCmd.at(i) == '&' || userCmd.at(i) == '|' || userCmd.at(i) == '(' || userCmd.at(i) == ')' || userCmd.at(i) == '>' || userCmd.at(i) == '<') {
 			ConnectorTrue = true; //if any connector, flag as true
 			break; //moves on after it finds at least one connector
 		}
@@ -183,14 +189,21 @@ void parse(string userCmd, vector<string> &combined) { //parses input and puts i
 				}
 			}
 			
-			else if (userCmd.at(i) == '|' && userCmd.at(i + 1) == '|') { // checks for Or connector
-				//if (userCmd.at(i + 1) == '|') {
+			else if (userCmd.at(i) == '|') { // checks for Or connector
+				if (userCmd.at(i + 1) == '|') {
 					combined.push_back(userCmd.substr(start, i - 1 - start));
 					combined.push_back("|");
 					i = i + 2;
 					start = i + 1;
 					//i = i - 1;
-				//}
+				}
+				
+				else {
+					combined.push_back(userCmd.substr(start, i - start));
+					combined.push_back("%");
+					i = i + 1;
+					start = i + 1;
+				}
 			}
 			
 			else if (userCmd.at(i) == '(') {
@@ -242,6 +255,29 @@ void parse(string userCmd, vector<string> &combined) { //parses input and puts i
 				}
 			}
 			
+			/*else if (userCmd.at(i) == '>') {
+				if (userCmd.at(i + 1) == '>') {
+					combined.push_back(userCmd.substr(start, i - start));
+					combined.push_back(">>");
+					i = i + 2;
+					start = i + 1;
+				}
+				
+				else {
+					combined.push_back(userCmd.substr(start, i - start));
+					combined.push_back(">");
+					i = i + 1;
+					start = i + 1;
+				}
+			}
+			
+			else if (userCmd.at(i) == '<') {
+				combined.push_back(userCmd.substr(start, i - start));
+				combined.push_back("<");
+				i = i + 1;
+				start = i + 1;
+			}*/
+			
 			else if (i == (userCmd.size() - 1) && CommentTrue == false) { // if there is no comment 
 				//cout << i << endl;
 				//cout << start << endl;
@@ -271,10 +307,10 @@ int main2() {
 		
 		parse(userCmd, combined);
 		
-		for (unsigned i = 0; i < combined.size(); ++i) { //this is just to see everything in combined
+		/*for (unsigned i = 0; i < combined.size(); ++i) { //this is just to see everything in combined
 			cout << combined.at(i) << endl;
-		}
-		//shunting_yard(combined)->execute();
+		}*/
+		shunting_yard(combined)->execute();
 	}	
 	
 	return 0;
