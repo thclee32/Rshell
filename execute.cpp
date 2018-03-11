@@ -64,7 +64,11 @@ bool Execute::execute()
 		}
 		if(foundRedirect == false)
 		{
+<<<<<<< HEAD
 			temp1 = temp1 + " " + exeString.at(i);
+=======
+			temp1 = temp1 + exeString.at(i);
+>>>>>>> 57d0b37e1a1d8236ab1a3ae3ea07f12f681a9c52
 		}
 		else
 		{
