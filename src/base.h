@@ -15,7 +15,7 @@ public:
 	    this->rhs = rhs;
 	}
 	virtual bool check() = 0;
-	virtual bool execute() = 0;
+	virtual bool execute(int in, int out) = 0;
 	// virtual string get_data() = 0;
 	// virtual void print() = 0;
 

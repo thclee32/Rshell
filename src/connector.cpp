@@ -2,6 +2,17 @@
 #include "connector.h"
 #include "base.h"
 #include <iostream>
+#include <vector>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdlib.h>	
+#include <string.h>
+#include <string>
+#include <fcntl.h>
+
 
 using namespace std;
 
@@ -13,9 +24,9 @@ using namespace std;
 
 Semi::Semi() : Connector() {}
 
-bool Semi::execute() {
-	lhs->execute();
-	bool a = rhs->execute();
+bool Semi::execute(int in, int out) {
+	lhs->execute(0, 1);
+	bool a = rhs->execute(0, 1);
 	if(a) {
 		return true;
 	}
@@ -37,13 +48,13 @@ bool Semi::check() {
 }*/
 Or::Or() : Connector() {}
 
-bool Or::execute() {
-	if(lhs->execute()) {
+bool Or::execute(int in, int out) {
+	if(lhs->execute(0, 1)) {
 		return true;
 	}
 
 	else {
-		if(rhs->execute()) {
+		if(rhs->execute(0, 1)) {
 			return true;
 		}
 		else {
@@ -67,9 +78,9 @@ bool Or::check() {
 }*/
 And::And() : Connector() {}
 
-bool And::execute() {
-	if(lhs->execute()) {
-		if(rhs->execute()) {
+bool And::execute(int in, int out) {
+	if(lhs->execute(0, 1)) {
+		if(rhs->execute(0, 1)) {
 			return true;
 		}
 		
@@ -87,13 +98,23 @@ bool And::check() {
 
 Pipe::Pipe() : Connector() {}
 
-bool Pipe::execute() {
-	return true;
+bool Pipe::execute(int in, int out) {
+	int fds[2];
+	pipe(fds);
+	
+	lhs->execute(in, fds[1]);
+	rhs->execute(fds[0], out);
+	
+	close(fds[0]);
+	close(fds[1]);
+	
+	return true; //???????
+	
 }
 
 bool Pipe::check()
 {
-	return true;
+	return false;
 }
 
 // void And::print() {

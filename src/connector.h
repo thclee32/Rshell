@@ -13,7 +13,7 @@ class Connector: public Base
 	public:
 		Connector() : Base() {}
 
-		virtual bool execute() = 0; // int a is the input and int b is the out
+		virtual bool execute(int in, int out) = 0; // int a is the input and int b is the out
 		virtual bool check() = 0;
 };
 
@@ -26,7 +26,7 @@ class Semi:public Connector
 	public:
 		//Semi(Base* lhs, Base* rhs);
 		Semi();
-		bool execute();
+		bool execute(int in, int out);
 		bool check();
 };
 
@@ -39,7 +39,7 @@ class Or : public Connector
 	public:
 		//Or(Base* lhs, Base* rhs);
 		Or();
-		bool execute();
+		bool execute(int in, int out);
 		bool check();
 };
 
@@ -52,7 +52,7 @@ class And : public Connector
 	public:
 		//And(Base* lhs, Base* rhs);
 		And();
-		bool execute();
+		bool execute(int in, int out);
 		bool check();
 };
 
@@ -60,7 +60,7 @@ class Pipe : public Connector
 {
 	public:
 	Pipe();
-	bool execute();
+	bool execute(int in, int out);
 	bool check();
 };
 

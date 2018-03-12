@@ -1,4 +1,6 @@
 bin
+hello.txt
+hi.txt
 makefile
 output.txt
 src

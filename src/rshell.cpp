@@ -139,7 +139,7 @@ void parse(string userCmd, vector<string> &combined) { //parses input and puts i
 	}
 	
 	for (unsigned i = 0; i < userCmd.size(); i++) { //traversing to check for a connector
-		if (userCmd.at(i) == ';' || userCmd.at(i) == '&' || userCmd.at(i) == '|' || userCmd.at(i) == '(' || userCmd.at(i) == ')' || userCmd.at(i) == '>' || userCmd.at(i) == '<') {
+		if (userCmd.at(i) == ';' || userCmd.at(i) == '&' || userCmd.at(i) == '|' || userCmd.at(i) == '(' || userCmd.at(i) == ')') {
 			ConnectorTrue = true; //if any connector, flag as true
 			break; //moves on after it finds at least one connector
 		}
@@ -310,7 +310,7 @@ int main2() {
 		/*for (unsigned i = 0; i < combined.size(); ++i) { //this is just to see everything in combined
 			cout << combined.at(i) << endl;
 		}*/
-		shunting_yard(combined)->execute();
+		shunting_yard(combined)->execute(0, 1); 
 	}	
 	
 	return 0;

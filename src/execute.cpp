@@ -30,7 +30,7 @@ Execute::Execute(string someString) {
 
 
 
-bool Execute::execute()
+bool Execute::execute(int in, int out)
 {	
 	// for(unsigned i = 0; i < exeString.size(); ++i)
 	// {
@@ -64,11 +64,7 @@ bool Execute::execute()
 		}
 		if(foundRedirect == false)
 		{
-<<<<<<< HEAD
 			temp1 = temp1 + " " + exeString.at(i);
-=======
-			temp1 = temp1 + exeString.at(i);
->>>>>>> 57d0b37e1a1d8236ab1a3ae3ea07f12f681a9c52
 		}
 		else
 		{
@@ -184,22 +180,22 @@ bool Execute::execute()
 		{
 			int buffer = dup(0);
 			
-			int outputfile = open(exeString.at(1).c_str(), O_RDWR);
+			int fd = open(exeString.at(1).c_str(), O_RDWR);
 			
-			if(outputfile == -1)
+			if(fd == -1)
 			{
 				perror("Error: unable to open file");
 				return false;
 			}
 			
 			close(0);
-			dup2(outputfile, 0);
+			dup2(fd, 0);
 		
 			//IM DYING
 			//STOP DYING
 			
 			Execute* test = new Execute(exeString.at(0));
-			bool firstcommand = test->execute();
+			bool firstcommand = test->execute(0, 1);
 			
 			close(0);
 			dup2(buffer, 0);
@@ -214,7 +210,7 @@ bool Execute::execute()
 			int fd;		//file descriptor
 			int ret;	//return of dup2 call
 			
-			fd = open(exeString.at(1).c_str(), O_CREAT | O_WRONLY);
+			fd = open(exeString.at(1).c_str(), O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU | S_IRWXG);
 			
 			//if fd returns -1, it failed
 			if(fd < 0)
@@ -234,7 +230,7 @@ bool Execute::execute()
 			}
 			
 			Execute* test = new Execute(exeString.at(0));
-			bool firstcommand = test->execute();
+			bool firstcommand = test->execute(0, 1);
 			
 			close(1);
 			dup2(buffer, 1);
@@ -250,7 +246,7 @@ bool Execute::execute()
 			int fd; 		//file descriptor
 			int ret;		//return value of dup2 call
 			
-			fd = open(exeString.at(1).c_str(), O_CREAT | O_APPEND | O_WRONLY);
+			fd = open(exeString.at(1).c_str(), O_CREAT | O_APPEND | O_WRONLY, S_IRWXU | S_IRWXG);
 			//if fd returns -1, it failed
 			if(fd < 0)
 			{
@@ -269,23 +265,15 @@ bool Execute::execute()
 			}
 			
 			Execute* test = new Execute(exeString.at(0));
-			bool firstcommand = test->execute();
+			bool firstcommand = test->execute(0, 1);
 			
 			close(1);
 			dup2(buffer, 1);
 			
 			return firstcommand;
-			
 		}
-		// else if(redirect == "|")
-		// {
-		// 	int mypipe[2];
-		// 	int pipereturn;
-			
-		// 	pipereturn = pipe(mypipe);
-			
-			
-		// }
+		
+	
 		
 	}
 	//---------------END REDIRECTION/PIPE COMMANDS------------------
@@ -310,6 +298,16 @@ bool Execute::execute()
 		}
 		
 		else if (pid == 0) {
+			dup2(in, 0);
+			dup2(out, 1);
+			if (in != 0) {
+				close(in);
+			}
+			
+			else if (out != 1) {
+				close(out);
+			}
+			
 			if (execvp(*args, args) < 0) { // if execvp returns, then error
 				cout << "*** ERROR: exec failed\n" << endl;
 	            exit(1);

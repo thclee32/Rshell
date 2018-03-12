@@ -14,7 +14,7 @@ class Execute: public Base {
 	public:
 		Execute() : Base() {}
 		Execute(string someString);
-		bool execute();
+		bool execute(int in, int out);
 		bool check();
 		bool system_calling(vector<char*> cmdSystem);
 };
