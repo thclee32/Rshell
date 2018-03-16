@@ -1,0 +1,17 @@
+echo
+echo Testing output redirection
+echo Showing ls before
+ls
+echo Now using output redirection to create new file and put ls in the file
+ls > testfile
+echo Showing contents of testfile
+cat testfile
+echo Using output redirection to erase contents of file and echo hello world
+echo hello world > testfile
+echo Showing contents of testfile
+cat testfile
+echo Removing testfile
+rm testfile
+echo 
+echo Exiting test.
+exit

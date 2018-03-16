@@ -1,0 +1,24 @@
+echo
+echo Testing append redirection.
+echo
+echo Creating testfile and appending hello world to testfile
+echo hello world >> testfile
+echo Showing contents of testfile
+cat testfile
+echo
+echo Appending "second line" to testfile
+echo second line >> testfile
+echo Showing contents of testfile with second line appended
+cat testfile
+echo
+echo Appending more than one time
+echo third line >> testfile
+echo fourth line >> testfile
+echo Showing contents of testfile with third and fourth lines appended
+cat testfile
+echo
+echo Removing testfile
+rm testfile
+echo 
+echo Exiting test.
+exit

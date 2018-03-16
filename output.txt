@@ -1,5 +1,0 @@
-bin
-makefile
-output.txt
-src
-test.txt

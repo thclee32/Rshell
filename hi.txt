@@ -1,6 +1,0 @@
-bin
-hi.txt
-makefile
-output.txt
-src
-test.txt

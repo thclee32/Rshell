@@ -1,0 +1,10 @@
+echo
+echo Testing input redirection
+echo
+cat < input.txt
+cat < append.txt
+cat < README.md
+exit
+echo 
+echo Program will exit now.
+exit

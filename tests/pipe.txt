@@ -1,0 +1,23 @@
+echo
+echo Testing pipe
+echo Displaying ls
+ls
+echo Using pipe and head commands to show first element of ls
+ls | head -1
+echo
+ls | head -1 | tr a-z A-Z
+echo
+ls > test.txt
+echo hello > out.txt
+cat < test.txt
+cat < out.txt
+cat < test.txt | tr a-z A-Z
+cat < test.txt | tr a-z A-Z > out.txt
+cat < test.txt | tr A-Z a-z | tee out.txt | tr a-z A-Z > final.txt
+
+echo Removing test.txt and out.txt and final.txt
+rm test.txt
+rm out.txt
+rm final.txt
+echo Exiting program
+exit
