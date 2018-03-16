@@ -5,6 +5,8 @@ cat < input.txt
 cat < append.txt
 cat < README.md
 exit
+exit
 echo 
 echo Program will exit now.
+exit
 exit
