@@ -80,5 +80,6 @@ Known Bugs
 --------
 1. Does not handle quotations. (ex. echo "Hello world" should print hello world, but instead rshell prints the entire string including quotations "hello world".)
 2. As of now multiple precedence operators (parentheses) work, when they shouldn't. (ex. ((ls)) should not work, but our program treats them as balanced operators and executes normally.)
+3. Piping test script has a few errors when compiling, but running the exact same test cases with make does not yield any errors.
 
 
