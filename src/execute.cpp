@@ -11,6 +11,7 @@
 #include <string>
 #include <fcntl.h>
 #include <algorithm>
+#include <iterator>
 
 using namespace std;
 
