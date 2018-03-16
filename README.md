@@ -17,11 +17,24 @@ Task Distribution
 --------------
 Thomas Lee complete:
 
+Task 1: Github Setup (10%)
+
+Task 2: Input redirection (For commands contain "<", 20%);
+
+Task 3: output redirection (For commands contain ">" and ">>", 5%);
+
+Task 5: construct test scripts (enough test cases, 15%);
 
 Total: 50%
 
+
 Kimberly Wu complete:
 
+Task 3: "Test" command 2 (for the case "[ -e test/file/path ]", 15%);
+
+Task 4: Piping (25%)
+
+Task 6: construct json and README files, and git commit (that means, all the works meaned from the part "Submission" to "Coding Conventions" in assignment 4 description)(10%) 
 
 Total: 50%
 
@@ -70,8 +83,8 @@ To run rshell
 Open the terminal and run these commands:
 ```
 1. git clone https://github.com/tlee066/CS100-Assignment-4-Kim-Thomas.git
-2. cd cs100-assignment-2-thomas-and-jeff
-3. git checkout assn3
+2. cd CS100-Assignment-4-Kim-Thomas
+3. git checkout assn4
 4. make
 5. ./bin/rshell
 ```
