@@ -59,18 +59,17 @@ of our program. To run any of the scrips, navigate to the tests directory and en
 ```
 Scripts include:
 ```
-single_command.sh		#tests single commands
-multi_command.sh		#tests commands with ;, &&, or ||
-commented_command.sh		#tests commands with comments
-exit.sh				#tests exit and commands with exit
-test.sh             #tests the test command
-precedence.sh           #tests precedence operators
+append_redirect_test.sh		#tests appending redirection
+input_redirect_test.sh		#tests input redirection
+output_redirect_test.sh		#tests output redirection
+pipe_test.sh				#tests piping
+
 ```
 To run rshell
 ---------
 Open the terminal and run these commands:
 ```
-1. git clone https://github.com/cs100/cs100-assignment-2-thomas-and-jeff.git
+1. git clone https://github.com/tlee066/CS100-Assignment-4-Kim-Thomas.git
 2. cd cs100-assignment-2-thomas-and-jeff
 3. git checkout assn3
 4. make
@@ -80,5 +79,5 @@ Known Bugs
 --------
 1. Does not handle quotations. (ex. echo "Hello world" should print hello world, but instead rshell prints the entire string including quotations "hello world".)
 2. As of now multiple precedence operators (parentheses) work, when they shouldn't. (ex. ((ls)) should not work, but our program treats them as balanced operators and executes normally.)
-
+3. Piping test script has a few errors when run, but running the exact same test cases with normal program execution does not yield any errors.
 
