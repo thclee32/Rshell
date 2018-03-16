@@ -13,7 +13,7 @@ protected:
 public:
 	Command() : Base() {}
 	//Command(vector<char*> arg);
-	bool execute();
+	bool execute(int in, int out);
 };
 
 

@@ -4,6 +4,6 @@
 
 using namespace std;
 
-bool Command::execute() {
+bool Command::execute(int in, int out) {
 	return true;
 }

@@ -102,11 +102,15 @@ bool Pipe::execute(int in, int out) {
 	int fds[2];
 	pipe(fds);
 	
+	//cout << "left" << endl;
 	lhs->execute(in, fds[1]);
-	rhs->execute(fds[0], out);
-	
-	close(fds[0]);
 	close(fds[1]);
+	// cout << "output closed" << endl;
+
+	//cout << "right" << endl;
+	rhs->execute(fds[0], out);
+	close(fds[0]);
+	// cout << "input closed" << endl;
 	
 	return true; //???????
 	
