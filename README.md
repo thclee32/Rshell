@@ -11,7 +11,7 @@ kwu017@ucr.edu
 
 Repository
 --------------
-https://github.com/tlee066/CS100-Assignment-4-Kim-Thomas
+https://github.com/tlee066/Rshell
 
 Summary
 --------------
@@ -56,8 +56,8 @@ To run rshell
 ---------
 Open the terminal and run these commands:
 ```
-1. git clone https://github.com/tlee066/CS100-Assignment-4-Kim-Thomas.git
-2. cd CS100-Assignment-4-Kim-Thomas
+1. git clone https://github.com/tlee066/Rshell.git
+2. cd Rshell
 3. git checkout assn4
 4. make
 5. ./bin/rshell
