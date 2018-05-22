@@ -13,32 +13,6 @@ Repository
 --------------
 https://github.com/tlee066/CS100-Assignment-4-Kim-Thomas
 
-Task Distribution
---------------
-Thomas Lee complete:
-
-Task 1: Github Setup (10%)
-
-Task 2: Input redirection (For commands contain "<", 20%);
-
-Task 3: output redirection (For commands contain ">" and ">>", 5%);
-
-Task 5: construct test scripts (enough test cases, 15%);
-
-Total: 50%
-
-
-Kimberly Wu complete:
-
-Task 3: "Test" command 2 (for the case "[ -e test/file/path ]", 15%);
-
-Task 4: Piping (25%)
-
-Task 6: construct json and README files, and git commit (that means, all the works meaned from the part "Submission" to "Coding Conventions" in assignment 4 description)(10%) 
-
-Total: 50%
-
-
 Summary
 --------------
 ***rshell*** is a command shell program, created to have the ability to implement BASH commands. rshell
